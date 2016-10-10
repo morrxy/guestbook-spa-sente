@@ -33,6 +33,7 @@ body {
 .content {
   background: white;
   width: 520px;
+  padding: 30px;
 }
 form, .error {
   width: 520px;
