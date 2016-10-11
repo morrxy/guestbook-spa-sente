@@ -3,6 +3,7 @@
             [guestbook.layout :refer [error-page]]
             [guestbook.routes.home :refer [home-routes]]
             [guestbook.middleware :as middleware]
+            [guestbook.routes.ws :refer [websocket-routes]]
             [clojure.tools.logging :as log]
             [compojure.route :as route]
             [config.core :refer [env]]
@@ -32,6 +33,7 @@
 
 (def app-routes
   (routes
+    #'websocket-routes
     (wrap-routes #'home-routes middleware/wrap-csrf)
     (route/not-found
       (:body
