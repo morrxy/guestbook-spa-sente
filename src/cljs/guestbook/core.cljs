@@ -28,7 +28,6 @@
     [:p "Name:"
      [:input.form-control
       {:type :text
-       :name :name
        :on-change #(swap! fields assoc :name (-> % .-target .-value))
        :value (:name @fields)}]]
     [errors-component errors :message]
@@ -36,17 +35,16 @@
      [:textarea.form-control
       {:row 4
        :cols 50
-       :name :message
-       :on-change #(swap! fields assoc :message (-> % .-target .-value))}
-      (:message @fields)]]
+       :value (:message @fields)
+       :on-change #(swap! fields assoc :message (-> % .-target .-value))}]]
     [:input.btn.btn-primary
      {:type :submit
-      :on-click #(ws/send-message! @fields)
+      :on-click #(ws/send-message! [:guestbook/add-message @fields] 8000)
       :value "comment"}]]])
 
 (defn response-handler [messages fields errors]
-  (fn [message]
-    (if-let [response-errors (:erros message)]
+  (fn [{[_ message] :?data}]
+    (if-let [response-errors (:errors message)]
       (reset! errors response-errors)
       (do
         (reset! errors nil)
@@ -57,8 +55,7 @@
   (let [messages (atom nil)
         errors (atom nil)
         fields (atom nil)]
-    (ws/connect! (str "ws://" (.-host js/location) "/ws")
-                 (response-handler messages fields errors))
+    (ws/start-router! (response-handler messages fields errors))
     (get-messages messages)
     (fn []
       [:div

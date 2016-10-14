@@ -30,7 +30,15 @@
                  [luminus-log4j "0.1.2"]
                  [org.clojure/clojurescript "1.7.228" :scope "provided"]
                  [reagent "0.5.1"]
-                 [cljs-ajax "0.5.2"]]
+                 [cljs-ajax "0.5.2"]
+                 [com.taoensso/encore "2.84.2"]
+                 [com.taoensso/timbre "4.1.5-SNAPSHOT"]
+                 [com.taoensso/sente "1.7.0"]
+                 [com.taoensso/tower "3.0.2"]
+                 ;[com.taoensso/timbre  "4.7.4"]
+                 ;[com.taoensso/sente "1.11.0"]
+                 ;[com.taoensso/tower "3.0.2"]
+                 ]
 
   :min-lein-version "2.0.0"
   :uberjar-name "guestbook.jar"
